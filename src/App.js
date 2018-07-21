@@ -2,55 +2,54 @@ import React, { Component } from 'react';
 import NameComponent from './Components/NameComponent'
 
 class App extends Component {
+  //comes before components, helps set up fundamental for everything else
+  constructor(props) {
+    super(props);
+    // this.state = {
+    //   array: ['fix', 'them', 'bugs']
+    //}
+    //can bind handleClick() to state here as well as when calling function
+    // this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      user_name: 'Kasey',
+      profession: 'Developer'
+    };
+  }
+
   //method part of Component Class
   componentDidMount() {
     console.log('mounted')
   }
-  //Removing this method to keep app compact and just write method in component.
-  //This is a simple method and can be directly made in component
-  /*consoleLog() {
-    console.log('I\'m pressed!');
-  }*/
+  //not a built in function of library
+  //it cannot inherently setState or access state
+  //it needs binds
+  handleClick() {
+    this.setState ({
+      user_name: "Kasey Colian",
+      profession: "Future Sr Developer"
+    });
+  }
 
   //method part of Component Class
   render() {
 
-    var word = 'hello';
-    var style = {fontSize: '100px'};
-    
-    const array = ['welcome', 'to', 'my', 'beginner', 'react', 'project'];
-    array.push('from', 'Udemy');
+    //one way to reference array in state is to declare a variable instead of calling this.state.array directly
+    // const { array } = this.state;
 
-    //For Loops: Key Props are required, it will render, but throw error in console
-    //Unique Keys are required for handling & storing w/ React
-    //in this situation, each word will be different, so we can use {word}
-    // const arrayToRender = [];
-    // array.forEach(function(word){
-    //   arrayToRender.push(
-    //     <p key={word}>{word}</p>)
-    // })
+    const style = {fontSize: '100px'};
+    
 
     //variables get added w/ {}
     //components get added with <>
 
     return (
-      <div>
-        <p className = "large" style={{fontSize: "200px"}}>meow</p>
-        { /*This was where we called in original forEach loop, but was replaced w/ map */
-        /*<p style ={style}>{word}</p> */}    
-       
-        {array.map(word => {
-           if (word !== 'from' && word !== 'Udemy') {
-            return (
-               <p key={word}>{word}</p>
-              )
-          }
-        })}
-      
+      <div className = "header">
+        <p style={style}>
+          {this.state.user_name} - {this.state.profession}
+        </p>
         <NameComponent/>
-       {//Removing this called in component and writing directly into onClick
-       /* <button onClick={ this.consoleLog }>*/}
-          <button onClick = {() => { console.log('I am clicked!') }}>
+          {/* binding handleClick() to state. render() has access to state, handleClick() doesn't */}
+          <button onClick = {this.handleClick.bind(this)}>
             <NameComponent/>
         </button>
       </div>

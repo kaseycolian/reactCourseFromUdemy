@@ -1,0 +1,22 @@
+Data in ReactJS  reactjs.org
+
+yarn start
+npm start
+
+Rarely ever set variables globally
+	-Variables are managed internally for each component
+
+State refers to internal data of component ('inside')
+	-state declared in constructor
+	-contains the state of component (attributes that effect rendering & what user sees)
+	-used to modify appearance in JSX
+	-register events & user interactions
+	-can populate dynamically
+		-ie: dropdown menu only if user clicks
+
+Props is how we communicate data between components ('between')
+
+Constructor
+	-very fundamental 
+	-before other methods/components - lets other methods know what to have (ie: state, bindings)
+
