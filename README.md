@@ -1,3 +1,3 @@
-Coursework from Udemy Course React for Absolute Beginners
+### Coursework from Udemy Course React for Absolute Beginners
 
-Commits are made when new techniques are learned for later reference.
+- Commits are made when new techniques are learned for later reference.

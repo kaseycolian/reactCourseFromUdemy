@@ -15,12 +15,23 @@ class App extends Component {
 
     var word = 'hello';
     var style = {fontSize: '100px'};
-    var style2 = {backgroundColor: 'magenta'};
+    
+    var array = ['welcome', 'to', 'my', 'beginner', 'react', 'project'];
+
+    var arrayToRender = [];
+    array.forEach(function(word){
+      arrayToRender.push(
+        <p>{word}</p>)
+    })
+
+    //variables get added w/ {}
+    //components get added with <>
 
     return (
       <div>
         <p className = "large" style={{fontSize: "200px"}}>meow</p>
-        <p style ={style}>{word}</p>
+        <p style ={style}>{word}</p>        
+        {arrayToRender}
         <NameComponent/>
         <button onClick={ this.consoleLog }>
             <NameComponent/>
