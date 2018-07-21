@@ -23,9 +23,10 @@ class App extends Component {
   //not a built in function of library
   //it cannot inherently setState or access state
   //it needs binds
+  //whenever click happens, the anything that is binded to this w/ the props changed, will be updated
   handleClick() {
     this.setState ({
-      user_name: "Kasey Colian",
+      user_name: "Kasey R Colian",
       profession: "Future Sr Developer"
     });
   }
@@ -38,18 +39,18 @@ class App extends Component {
 
     const style = {fontSize: '100px'};
     
-
-    //variables get added w/ {}
-    //components get added with <>
-
     return (
       <div className = "header">
         <p style={style}>
           {this.state.user_name} - {this.state.profession}
         </p>
-        <NameComponent/>
-          {/* binding handleClick() to state. render() has access to state, handleClick() doesn't */}
-          <button onClick = {this.handleClick.bind(this)}>
+        <NameComponent user_name={this.state.user_name}/>
+
+        {/* binding handleClick() to state. render() has access to state, handleClick() doesn't.
+        Everytime a prop or state gets changed, React will update all components with that state & prop.
+        When HandleClick executes, the userName & profession will update wherever this.state.user_name & this.profession are used
+         */}
+        <button onClick = {this.handleClick.bind(this)}>
             <NameComponent/>
         </button>
       </div>

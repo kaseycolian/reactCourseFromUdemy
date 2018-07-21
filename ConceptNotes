@@ -15,6 +15,11 @@ State refers to internal data of component ('inside')
 		-ie: dropdown menu only if user clicks
 
 Props is how we communicate data between components ('between')
+	-passing data
+	-can chain props together w/ state
+	-can become state of component it's passed to
+	-keep under control, try not to pass down through a lot of child components, there are better ways to manage data
+	-If you have a component that isn't using a prop (doesn't display or effect the display of it), then don't give that component the information - reduces the cognitive load of understanding/following the code
 
 Constructor
 	-very fundamental 
