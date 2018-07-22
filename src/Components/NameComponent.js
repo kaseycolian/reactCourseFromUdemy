@@ -9,8 +9,6 @@ class NameComponent extends Component {
     }
   }
 
-
-  //method part of Component Class
   componentDidMount() {
     console.log('Mounted Name')
   }
@@ -34,18 +32,17 @@ class NameComponent extends Component {
       }
     }
   }
-  //method part of Component Class
+  
   render() {
     const {user_name} = this.props;
     const {name_displayed} = this.state;
+    const style = {color: 'magenta'};
+    const style2 = {color: 'blue'};
 
     return (
       <div>
-      <p>{name_displayed}</p>
-    {/* Can user ternary inline if no prop is defined when component used
-        There is no user_name set, so this will display as 'No Name' until one is set.
-    */} 
-       <p>{user_name ? user_name : 'No User Here'}</p>
+      <p style={style}>{name_displayed}</p>
+      <p style = {style2}>{user_name ? user_name : 'No User Here'}</p>
       </div>
     );
   }

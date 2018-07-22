@@ -25,3 +25,17 @@ Constructor
 	-very fundamental 
 	-before other methods/components - lets other methods know what to have (ie: state, bindings)
 
+Lifecycle
+-When component is alive & existing on screen
+-What kind of events happen in the background, wwen it starts/receives props/changes.
+-Methods with "will" called right before something happens
+-Methods with "did" are called right after something happens.
+-componentDidMount()
+	-Set up initial data
+-componentWillReceiveProps()
+	-Good when you need to change internal state based on change in property
+-componendDidUpdate()
+	-Happens after the state has been updated
+	-Check to see what happened once state has been updated
+
+
