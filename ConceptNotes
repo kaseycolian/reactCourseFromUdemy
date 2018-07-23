@@ -1,5 +1,17 @@
 Data in ReactJS  reactjs.org
 
+npm install react react-scripts --save-dev
+
+
+3 steps from https://react-bootstrap.github.io/getting-started/introduction:
+
+1. npm install --save react react-dom
+2. npm install --save react-bootstrap
+
+Index.html found in public dir, add CSS link:
+3. <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
 yarn start
 npm start
 
