@@ -102,7 +102,7 @@ class App extends Component {
                     <tbody>                         
                       {this.state.jsonList.map(item => {
                         return (
-                           <tr>
+                           <tr key={item.name}>
                             <td>{item.name}</td>
                             <td>{item.address}</td>
                             <td>{item.age}</td>
