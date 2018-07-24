@@ -1,16 +1,25 @@
 Data in ReactJS  reactjs.org
 
 npm install react react-scripts --save-dev
+	-import React, { Component } from 'react';
 
 
-3 steps from https://react-bootstrap.github.io/getting-started/introduction:
+Steps from https://react-bootstrap.github.io/getting-started/introduction:
 
 1. npm install --save react react-dom
 2. npm install --save react-bootstrap
+	**When you bring in a react component from the library to your JS, you need to add the import to the top of the JS. 
+	ie: import {'Navbar'} from 'react-bootstrap';
+		-Able to add elements from other component examples.
+			-IE: added pullRight to move dropdowns to right side of nav
+			-IE: added inverse collapseOnSelect to make menus collapse on select & inverse the colors
 
 Index.html found in public dir, add CSS link:
 3. <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+
+4.  npm install --save react-select
+	-import Select from 'react-select' 
 
 yarn start
 npm start
