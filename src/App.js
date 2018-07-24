@@ -35,12 +35,18 @@ class App extends Component {
   //needs to be binded to effect state b/c it's a function not inherent to Component Class
   //binded in onChange in render()
   handleChange(selectedOption) {
-    this.setState({ selectedOption });   
+    this.setState({
+     selectedOption : selectedOption ? selectedOption : ''
+    });   
     console.log(`Option selected:`, selectedOption);
-  }
+     }
 
   render() {
     const { selectedOption } = this.state;
+
+    const selectList = this.state.jsonList.map(item => {
+      return { value : item.name, label: item.name}
+    })
 
     return (
       <div>
@@ -75,15 +81,13 @@ class App extends Component {
                 <div className = "col-sm-3">
                   <Select
                     placeholder = "Select a number..."
-                    isMulti = "true"
+                    // isMulti = "true"
                     name="form-field-name"
                     value={selectedOption}
-                  /* this is where we bind the created function to effect state*/
+                    //when a name is selected from the list, it will change the state to that name
                     onChange={this.handleChange.bind(this)}
-                    options={[
-                      {value: 'one', label: 'One'},
-                      {value: 'two', label: 'Two'},
-                    ]}
+                    options=
+                      {selectList}
                   />
                 </div>
               </div>
@@ -101,15 +105,19 @@ class App extends Component {
                     </thead>
                     <tbody>                         
                       {this.state.jsonList.map(item => {
-                        return (
-                           <tr key={item.name}>
-                            <td>{item.name}</td>
-                            <td>{item.address}</td>
-                            <td>{item.age}</td>
-                            <td>{item.company}</td>
-                          </tr>
-                          /*specify which item in the array from json you want to list*/
-                        )
+                        //comparing to select list selection
+                        //this conditional will make it return everything if null or just the item for the selectedOption
+                        if (selectedOption === null || item.name === selectedOption.value) {
+                          console.log(selectedOption)
+                          return (
+                            <tr key={item._id}>
+                              <td>{item.name}</td>
+                              <td>{item.address}</td>
+                              <td>{item.age}</td>
+                              <td>{item.company}</td>
+                            </tr>
+                          )
+                        }                     
                       })}
                     </tbody>
                   </Table>
