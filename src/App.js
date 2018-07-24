@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Table } from 'react-bootstrap'
 import Select from 'react-select';
 
 class App extends Component {
@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       selectedOption: null,
+      jsonList: []
     };
   }
   //happens once a setState call happens (ie: button click in this code)
@@ -15,9 +16,20 @@ class App extends Component {
     console.log('changes');
   }
 
-  //method part of Component Class
+//Load initial data when page loads - this will happen here on page load
   componentDidMount() {
-    console.log('mounted')
+    fetch('http://www.json-generator.com/api/json/get/coLCADGZOW?indent=2', 
+    {
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log(json)
+      this.setState({
+        jsonList : json
+      })
+    })
+    .catch(error => console.log(error));
   }
 
   //needs to be binded to effect state b/c it's a function not inherent to Component Class
@@ -59,19 +71,50 @@ class App extends Component {
             <div className = "col-sm-12">
               <h1>Kasey's Page</h1>
               <p>Here we'll list some data from a bunch of sources!</p>
-               <Select
-                  placeholder = "Select a number..."
-                  isMulti = "true"
-
-                  name="form-field-name"
-                  value={selectedOption}
-                /* this is where we bind the created function to effect state*/
-                  onChange={this.handleChange.bind(this)}
-                  options={[
-                    {value: 'one', label: 'One'},
-                    {value: 'two', label: 'Two'},
-                  ]}
-                />
+              <div className = "row">
+                <div className = "col-sm-3">
+                  <Select
+                    placeholder = "Select a number..."
+                    isMulti = "true"
+                    name="form-field-name"
+                    value={selectedOption}
+                  /* this is where we bind the created function to effect state*/
+                    onChange={this.handleChange.bind(this)}
+                    options={[
+                      {value: 'one', label: 'One'},
+                      {value: 'two', label: 'Two'},
+                    ]}
+                  />
+                </div>
+              </div>
+              <hr />
+              <div className = "row">
+                <div className = "col-sm-9">
+                  <Table striped bordered condensed hover>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Age</th>
+                        <th>Company</th>
+                      </tr>
+                    </thead>
+                    <tbody>                         
+                      {this.state.jsonList.map(item => {
+                        return (
+                           <tr>
+                            <td>{item.name}</td>
+                            <td>{item.address}</td>
+                            <td>{item.age}</td>
+                            <td>{item.company}</td>
+                          </tr>
+                          /*specify which item in the array from json you want to list*/
+                        )
+                      })}
+                    </tbody>
+                  </Table>
+                </div>
+              </div> 
             </div>
           </div>
         </div>
