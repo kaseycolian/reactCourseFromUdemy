@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Table } from 'react-bootstrap'
 import Select from 'react-select';
+import MapComponent from './Components/MapComponent.js';
 
 class App extends Component {
   //comes before components, helps set up fundamental for everything else
@@ -49,6 +50,7 @@ class App extends Component {
     })
 
     return (
+
       <div>
         <Navbar inverse collapseOnSelect>
           <Navbar.Header>
@@ -107,7 +109,7 @@ class App extends Component {
                       {this.state.jsonList.map(item => {
                         //comparing to select list selection
                         //this conditional will make it return everything if null or just the item for the selectedOption
-                        if (selectedOption === null || item.name === selectedOption.value) {
+                        if (selectedOption === null || item.name === selectedOption) {
                           console.log(selectedOption)
                           return (
                             <tr key={item._id}>
@@ -126,6 +128,7 @@ class App extends Component {
             </div>
           </div>
         </div>
+        <MapComponent/>
       </div>
     );
   }
