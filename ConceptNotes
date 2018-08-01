@@ -60,3 +60,160 @@ Lifecycle
 	-Check to see what happened once state has been updated
 
 
+Redux & Flux
+-Data Management
+-Redux is most in demand
+-Helps code to be modular
+-Helps w/ AJAX calls to handle data when it comes back
+-Components, Actions, Reducers, Store
+	-Components
+	-Users do things called Actions, send off AJAX calls
+	-Once Actions come back, they reach a Reducer
+	-Reducers will update information to store which will update Components
+
+
+
+Folder Structures
+-Different libraries (ie: flux, redux) will use different folders
+-Moving app.js into Components folders
+	-Will need to rename import location for index.js since app moved
+-Create actions folder in src
+	-Where AJAX calls will go
+-Create reducers folder in src
+	-Where info goes after action fetches
+-Create store folder in src
+	-Simple in redux, doesn't get much attention
+-Create containers folder in src
+	-this will send everything back to components
+
+
+Installing Redux:
+1. npm install --save redux
+2. npm install --save react-redux
+3. npm install --save redux-thunk
+**Redux knows where the code goes & where it needs to run once it's all setup 
+Then add boilerplate code: 
+	1. In Actions dir with what you want fetch URL to be & import fetchInfo() into App.js:
+
+		export const INFO_FETCHED = 'INFO_FETCHED';
+		export const NEW_INFO = 'NEW_INFO';
+
+		export function fetchInfo() {
+		  return (dispatch) => {
+		    return fetch('http://www.json-generator.com/api/json/get/cqJjWyLJua?indent=2', {
+		      method: 'GET'
+		    })
+		    .then(response => response.json())
+		    .then(json => {
+		      console.log(json)
+		      dispatch(loadInfo(json))
+		    })
+		    .catch(error => console.log(error));
+		  }
+		}
+
+		export function loadInfo(results) {
+		  return {
+		    type : INFO_FETCHED,
+		    payload : results
+		  }
+		}
+
+
+		**After importing fetchInfo from actions dir, call it in componentDidMount() {
+			this.props.dispatch(fetchInfo());
+		}
+
+
+	2. In index.js file:
+
+		import React from 'react';
+		import { render } from 'react-dom'
+		import { Provider } from 'react-redux'
+		import { createStore, applyMiddleware } from 'redux'
+		import thunk from 'redux-thunk'
+		import rootReducer from './reducers'
+
+		import './index.css';
+		import App from './containers/App';
+
+		let store = createStore(
+		  rootReducer,
+		  applyMiddleware(thunk)
+		);
+
+		render(
+		  <Provider store={store}>
+		    <App />
+		  </Provider>,
+		  document.getElementById('root')
+		)
+
+
+  
+  	3.  Create another index.js in store dir:
+
+  		import { createStore } from 'redux';
+		import rootReducer from '../reducers';
+
+		let store = createStore(rootReducer)
+
+
+
+	4.  Create another index.js in reducers dir.  The thing:thing is just junk code to let this render now (will still throw an error, but will at least render):
+
+
+		import { combineReducers } from 'redux';
+
+		const rootReducer = combineReducers({
+		   thing : 'thing'
+		});
+
+		export default rootReducer;
+
+
+	5. In App.js file in component dir import connect so redux will make everything communicate w/ one another:
+
+		import { connect } from 'react-redux';
+
+
+	6.  In Containers Dir create another App.js:
+
+		import { connect } from 'react-redux';
+
+		import AppComponent from '../components/App';
+
+		const mapStateToProps = state => {
+		  return {
+		    info : state.info
+		  };
+		}
+
+		const App = connect(
+		  mapStateToProps
+		)(AppComponent);
+
+		export default App;
+
+
+
+	7. Can rename App to AppComponent then at end of app.js file to make it all connect: 
+
+		const App = connect()(AppComponent);
+
+
+-App fetching something in actions, then main index.js will render properly. Store which will holder info. Reducer will define information that will go into the store.
+
+Action to reducer to container to user back to action
+
+-When you want to make an action: when you're dealing w/ info that's important to application state (that's why it's shared among components)
+	-You can do a little bit of logic in actions, although it's not always recommended
+	-Try to keep it to handling the data that's being returned
+		-ie: using stringify() to store info being returned from call
+
+
+Reducer
+-gets notice that something came back from action
+-action happens, then sends notice to reducer that action happened & came back (ajax call, click event, etc.)
+-takes return info from action, interprets it, and adds it to universal state of application
+-it knows which action is b/c it's connected through the import from the action

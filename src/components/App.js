@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Table } from 'react-bootstrap'
 import Select from 'react-select';
-import MapComponent from './Components/MapComponent.js';
+import MapComponent from './MapComponent';
 
-class App extends Component {
+import { connect } from 'react-redux';
+
+import { fetchInfo } from '../actions/actions_info'
+
+class AppComponent extends Component {
   //comes before components, helps set up fundamental for everything else
   constructor(props) {
     super(props);
@@ -18,19 +22,10 @@ class App extends Component {
   }
 
 //Load initial data when page loads - this will happen here on page load
+//When component Mounts, it calls in fetchInfo()
+  //has to be wrapped in this.props.dispatch to alert rest of Redux that something is happening
   componentDidMount() {
-    fetch('http://www.json-generator.com/api/json/get/coLCADGZOW?indent=2', 
-    {
-      method: 'GET'
-    })
-    .then(response => response.json())
-    .then(json => {
-      console.log(json)
-      this.setState({
-        jsonList : json
-      })
-    })
-    .catch(error => console.log(error));
+    this.props.dispatch(fetchInfo());
   }
 
   //needs to be binded to effect state b/c it's a function not inherent to Component Class
@@ -82,12 +77,13 @@ class App extends Component {
               <div className = "row">
                 <div className = "col-sm-3">
                   <Select
-                    placeholder = "Select a number..."
+                    placeholder = "Select a name..."
                     // isMulti = "true"
                     name="form-field-name"
                     value={selectedOption}
                     //when a name is selected from the list, it will change the state to that name
                     onChange={this.handleChange.bind(this)}
+                    escapeClearsValueboolean 
                     options=
                       {selectList}
                   />
@@ -109,7 +105,7 @@ class App extends Component {
                       {this.state.jsonList.map(item => {
                         //comparing to select list selection
                         //this conditional will make it return everything if null or just the item for the selectedOption
-                        if (selectedOption === null || item.name === selectedOption) {
+                        if (selectedOption === null || item.name === selectedOption.value) {
                           console.log(selectedOption)
                           return (
                             <tr key={item._id}>
@@ -133,5 +129,7 @@ class App extends Component {
     );
   }
 }
+
+const App = connect()(AppComponent);
 
 export default App;
